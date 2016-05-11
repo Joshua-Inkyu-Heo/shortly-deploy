@@ -1,1 +1,1 @@
-text.js
+console.log("test");
