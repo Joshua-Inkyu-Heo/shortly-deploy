@@ -48,6 +48,10 @@ describe('', function() {
             'url': 'http://www.roflzoo.com/'})
           .expect(200)
           .expect(function(res) {
+            console.log("res.body in the Link creation = " , res.body );
+
+            // code 가 안옴 ㅜㅜ
+
             expect(res.body.url).to.equal('http://www.roflzoo.com/');
             expect(res.body.code).to.be.ok;
           })
