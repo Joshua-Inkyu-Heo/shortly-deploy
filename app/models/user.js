@@ -1,6 +1,6 @@
 // var db = require('../config');
-// var bcrypt = require('bcrypt-nodejs');
-// var Promise = require('bluebird');
+var bcrypt = require('bcrypt-nodejs');
+var Promise = require('bluebird');
 
 // var User = db.Model.extend({
 //   tableName: 'users',
@@ -40,6 +40,18 @@ var users = new Schema({
     default: Date.now
   }
 });
+
+// users.pre( 'save' , function( next )
+// {
+//   this.password = bcrypt.hash(this.password, bcrypt.genSaltSync(), null, function(err, hash) {
+//     if (err) {
+//       throw err;
+//     } else {
+//       return hash;
+//     }
+//   });
+//   next();
+// });
 
 var User = mongoose.model('User', users);
 

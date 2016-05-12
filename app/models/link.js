@@ -1,5 +1,5 @@
 // var db = require('../config');
-// var crypto = require('crypto');
+var crypto = require('crypto');
 
 // var Link = db.Model.extend({
 //   tableName: 'urls',
@@ -38,6 +38,14 @@ var url = new Schema({
     type: Date,
     default: Date.now
   }
+});
+
+url.pre( 'save' , function( next )
+{
+  var shasum = crypto.createHash('sha1');
+  shasum.update(this.url);
+  this.code = shasum.digest('hex').slice(0, 5);
+  next();
 });
 
 var Link = mongoose.model('Link', url);
