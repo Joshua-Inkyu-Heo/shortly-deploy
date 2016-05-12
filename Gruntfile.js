@@ -125,7 +125,7 @@ module.exports = function(grunt) {
     if (grunt.option('prod')) {
       grunt.task.run([
       'build',
-      'upload --prod'
+      'shell'
       ]);
     } else {
       grunt.task.run([
