@@ -95,7 +95,6 @@ module.exports = function(grunt) {
     nodemon.stderr.pipe(process.stderr);
 
     grunt.task.run([ 'watch' ]);
-    grunt.task.run([ 'shell' ]);
   });
 
   ////////////////////////////////////////////////////
@@ -111,8 +110,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
-      // add your production server task here
-      ['shell']
+      ['shell:prodServer']
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
