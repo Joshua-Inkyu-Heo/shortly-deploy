@@ -106,19 +106,34 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'concat',
+    'uglify',
+    'eslint',
+    'cssmin'
+    // 'mochaTest'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
-      grunt.task.run(['shell'])
+      grunt.task.run(['shell']);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
-  grunt.registerTask('deploy', [
-    // add your deploy tasks here
-  ]);
+  grunt.registerTask('deploy', function(n) {
+    if (grunt.option('prod')) {
+      grunt.task.run([
+      'build',
+      'upload --prod'
+      ]);
+    } else {
+      grunt.task.run([
+      'build',
+      'upload'
+      ]);
+    }
+  });
 
 
 };
