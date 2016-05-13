@@ -27,7 +27,8 @@ var Promise = require('bluebird');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var users = new Schema({
+var users = new Schema(
+{
   // id: {
   //   type: Number,
   //   required: true,
@@ -35,23 +36,38 @@ var users = new Schema({
   // },
   username: String,
   password: String,
-  timestamps: {
+  timestamps:
+  {
     type: Date,
     default: Date.now
   }
 });
 
-// users.pre( 'save' , function( next )
-// {
-//   this.password = bcrypt.hash(this.password, bcrypt.genSaltSync(), null, function(err, hash) {
-//     if (err) {
-//       throw err;
-//     } else {
-//       return hash;
-//     }
-//   });
-//   next();
-// });
+  users.methods = {};
+
+  users.methods.comparePassword = function( attemptedPassword ,  callback )
+  {
+    bcrypt.compare( attemptedPassword , this.password , function( err , isMatch )
+    {
+      callback( isMatch );
+    });
+  };
+
+  users.methods.hashPassword = function()
+  {
+    var cipher = Promise.promisify( bcrypt.hash );
+    return cipher( this.password , null , null ).bind( this )
+      .then( function( hash )
+      {
+        this.password = hash;
+      });
+  };
+
+  users.pre( 'save' , function( next )
+  {
+    users.methods.hashPassword();
+    next();
+  });
 
 var User = mongoose.model('User', users);
 

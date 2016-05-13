@@ -45,7 +45,7 @@ var mongoose = require('mongoose');
 //var dbUrl = 'mongodb://admin:admin@ds053295.mongolab.com:53295/human';
 var mongoURL = process.env.URL || 'mongodb://localhost/shortly-deploy';
 
-var db = mongoose.connect(mongoURL);
+var db = mongoose.connect( mongoURL );
 
 // 컨트롤 + C를 누르면 몽구스 연결 종료
 // process.on('SIGINT', function() {

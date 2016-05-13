@@ -20,7 +20,8 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var url = new Schema({
+var url = new Schema(
+{
   // id: {
   //   type: Number,
   //   required: true,
@@ -30,11 +31,13 @@ var url = new Schema({
   baseUrl: String,
   code: String,
   title: String,
-  visits: {
+  visits:
+  {
     type: Number,
     default: 0
   },
-  timestamps: {
+  timestamps:
+  {
     type: Date,
     default: Date.now
   }
@@ -48,6 +51,6 @@ url.pre( 'save' , function( next )
   next();
 });
 
-var Link = mongoose.model('Link', url);
+var Link = mongoose.model( 'Link' , url );
 
 module.exports = Link;
